@@ -10,13 +10,14 @@ public class PlayerController : MonoBehaviour
     public bool isOnGround = true;
     public bool gameOver = false;
     private Animator playerAnim;
-
+    public ParticleSystem explosionParticle;
     // Start is called before the first frame update
     void Start()
     {
         playerRb = GetComponent<Rigidbody>();
         playerAnim = GetComponent<Animator>();
         Physics.gravity *= gravityModifier;
+
     }
 
     // Update is called once per frame
@@ -37,6 +38,7 @@ public class PlayerController : MonoBehaviour
             isOnGround = true;
         } else if(collision.gameObject.CompareTag("Obstacle"))
         {
+            explosionParticle.Play();
             gameOver = true;
             Debug.Log("Game Over!");
             playerAnim.SetBool("Death_b", true);
